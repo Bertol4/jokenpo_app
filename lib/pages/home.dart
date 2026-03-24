@@ -1,7 +1,38 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:jokenpo_app/pages/resultado.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  void _play(choice) {
+    int appChoice = Random().nextInt(3); // 0 - pedra, 1 - papel, 2 - tesoura;
+    String result;
+    if (choice == appChoice) {
+      result = 'Empate!';
+    } else if ((choice == 0 && appChoice == 2) ||
+        (choice == 1 && appChoice == 0) ||
+        (choice == 2 && appChoice == 1)) {
+      result = 'Você venceu!';
+    } else {
+      result = 'Você perdeu!';
+    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ResultPage(
+          userChoice: choice,
+          result: result,
+          appChoice: appChoice,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +71,23 @@ class HomePage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset('assets/images/pedra.png'),
-                      const SizedBox(width: 30,),
-                      Image.asset('assets/images/papel.png'),
-                      const SizedBox(width: 30,),
-                      Image.asset('assets/images/tesoura.png'),
+                      //pedra
+                      GestureDetector(
+                        onTap: () => _play(0),
+                        child: Image.asset('assets/images/pedra.png'),
+                      ),
+                      const SizedBox(width: 30),
+                      //papel
+                      GestureDetector(
+                        onTap: () => _play(1),
+                        child: Image.asset('assets/images/papel.png'),
+                      ),
+                      const SizedBox(width: 30),
+                      //tesoura
+                      GestureDetector(
+                        onTap: () => _play(2),
+                        child: Image.asset('assets/images/tesoura.png'),
+                      ),
                     ],
                   ),
                 ),

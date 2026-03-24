@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:jokenpo_app/pages/home.dart';
-import 'package:jokenpo_app/pages/resultado.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +13,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.purple),
-      home: ResultPage(),
+      home: HomePage(),
     );
+
   }
+
 }

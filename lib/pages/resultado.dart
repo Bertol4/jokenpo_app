@@ -1,7 +1,39 @@
 import 'package:flutter/material.dart';
 
 class ResultPage extends StatelessWidget {
-  const ResultPage({super.key});
+  final int userChoice;
+  final String result;
+  final int appChoice;
+
+  const ResultPage({
+    super.key,
+    required this.userChoice,
+    required this.result,
+    required this.appChoice,
+  });
+
+  String getChoiceImage(int choice) {
+    switch (choice) {
+      case 0:
+        return 'assets/images/pedra.png';
+      case 1:
+        return 'assets/images/papel.png';
+      case 2:
+        return 'assets/images/tesoura.png';
+      default:
+        return 'assets/images/padrao.png';
+    }
+  }
+
+  String getResultImage(String result) {
+    if (result == 'Você venceu!') {
+      return 'assets/images/icons8-vitória-48.png';
+    } else if (result == 'Você perdeu!') {
+      return 'assets/images/icons8-perder-48.png';
+    } else {
+      return 'assets/images/icons8-aperto-de-mãos-100.png';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,17 +53,16 @@ class ResultPage extends StatelessWidget {
 
       body: SizedBox(
         width: double.infinity,
-        // <--- ESTA LINHA garante que a Column ocupe a largura toda
+
         child: Padding(
           padding: const EdgeInsets.all(40),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
-            // <--- Agora o centro é o meio da tela
             children: [
               Column(
                 children: [
-                  Image.asset('assets/images/papel.png'),
+                  Image.asset(getChoiceImage(appChoice)),
                   const Text(
                     'Escolha do APP',
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -41,7 +72,7 @@ class ResultPage extends StatelessWidget {
 
               Column(
                 children: [
-                  Image.asset('assets/images/pedra.png'),
+                  Image.asset(getChoiceImage(userChoice)),
                   const Text(
                     'Sua Escolha',
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -52,18 +83,23 @@ class ResultPage extends StatelessWidget {
               Column(
                 children: [
                   Image.asset(
-                    'assets/images/icons8-perder-48.png',
+                    '${getResultImage(result)}',
                     width: 140,
                     height: 140,
                     fit: BoxFit.contain,
                   ),
-                  const Text(
-                    'Você Perdeu/venceu',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  Text(
+                    '$result',
+                    style: const TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  const SizedBox(height: 20,),
+                  const SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     style: ElevatedButton.styleFrom(
                       fixedSize: Size(270, 50),
                       backgroundColor: Color.fromRGBO(255, 0, 0, 1),
